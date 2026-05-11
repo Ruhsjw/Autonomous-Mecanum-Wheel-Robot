@@ -1,0 +1,98 @@
+﻿STEP to UG
+! INFO-     NX STEP AP203 - V1926
+! INFO-      
+! INFO-     Start of Translation: 24-NOV-2025  3:57:04 PM
+! INFO-      
+! STATUS-   Converting Part: C:\Users\buguniao\OneDrive\UPenn\classes\Mechatronic\Final_project\models\whisker_corner.stp
+! SUMMARY-   
+! SUMMARY-    STEP Header Information
+! SUMMARY-   
+! SUMMARY-  Description      Unknown
+! SUMMARY-  Imp_Level        2;1
+! SUMMARY-  File_Name        whisker_corner.stp
+! SUMMARY-  Date             2025-11-24T15:55:55-05:00
+! SUMMARY-  Author           Unknown
+! SUMMARY-  Organization     Unknown
+! SUMMARY-  Pre_Version      ST-DEVELOPER v19.4
+! SUMMARY-  Orig_System      SIEMENS PLM Software NX2306.1700
+! SUMMARY-  Authorization    Unknown
+! SUMMARY-  Schema_ID        ap203_configuration_controlled_3d_design_of_mechanical_parts_and_assemblies_mim_lf
+! SUMMARY-   
+! SUMMARY-    Summary of STEP Entities
+! SUMMARY-   
+! SUMMARY-  Entity Type                                                   Count
+! SUMMARY-  -----------                                                   ------
+! SUMMARY-  advanced_face ..............................................:     27
+! SUMMARY-  application_context ........................................:      1
+! SUMMARY-  approval ...................................................:      3
+! SUMMARY-  approval_date_time .........................................:      3
+! SUMMARY-  approval_person_organization ...............................:      3
+! SUMMARY-  approval_role ..............................................:      3
+! SUMMARY-  approval_status ............................................:      3
+! SUMMARY-  axis2_placement_3d .........................................:     58
+! SUMMARY-  calendar_date ..............................................:      3
+! SUMMARY-  cartesian_point ............................................:    141
+! SUMMARY-  circle .....................................................:     30
+! SUMMARY-  closed_shell ...............................................:      1
+! SUMMARY-  conversion_based_unit_and_plane_angle_unit .................:      1
+! SUMMARY-  coordinated_universal_time_offset ..........................:      3
+! SUMMARY-  cylindrical_surface ........................................:     15
+! SUMMARY-  date_and_time ..............................................:      3
+! SUMMARY-  dimensional_exponents ......................................:      1
+! SUMMARY-  direction ..................................................:    149
+! SUMMARY-  edge_curve .................................................:     63
+! SUMMARY-  edge_loop ..................................................:     63
+! SUMMARY-  face_bound .................................................:     55
+! SUMMARY-  face_outer_bound ...........................................:      8
+! SUMMARY-  geometric_representation_context_and_global_uncertainty_a ..:      1
+! SUMMARY-  length_unit_and_si_unit ....................................:      1
+! SUMMARY-  line .......................................................:     33
+! SUMMARY-  local_time .................................................:      3
+! SUMMARY-  manifold_solid_brep ........................................:      1
+! SUMMARY-  organization ...............................................:      3
+! SUMMARY-  oriented_edge ..............................................:    126
+! SUMMARY-  person .....................................................:      1
+! SUMMARY-  person_and_organization ....................................:      3
+! SUMMARY-  plane ......................................................:     12
+! SUMMARY-  plane_angle_measure_with_unit ..............................:      1
+! SUMMARY-  plane_angle_unit_and_si_unit ...............................:      1
+! SUMMARY-  product ....................................................:      1
+! SUMMARY-  product_context ............................................:      1
+! SUMMARY-  product_definition .........................................:      1
+! SUMMARY-  product_definition_context .................................:      1
+! SUMMARY-  product_definition_formation_with_specified_source .........:      1
+! SUMMARY-  product_definition_shape ...................................:      1
+! SUMMARY-  product_related_product_category ...........................:      1
+! SUMMARY-  si_unit_and_solid_angle_unit ...............................:      1
+! SUMMARY-  uncertainty_measure_with_unit ..............................:      1
+! SUMMARY-  vector .....................................................:     33
+! SUMMARY-  vertex_point ...............................................:     50
+! SUMMARY-                                                               -------
+! SUMMARY-  Total                                                            915
+! STATUS-    
+! STATUS-   Converting to Output Form (Phase 2 of 3): 24-NOV-2025 3:57:04 PM
+! STATUS-    
+! STATUS-    
+! STATUS-   Generating UG geometry and placing them in parts
+! STATUS-    
+! STATUS-   Creating the UG part (Phase 3 of 3): 24-NOV-2025  3:57:04 PM
+! INFO-     Filing Part ..: C:\Users\buguniao\OneDrive\UPenn\classes\Mechatronic\Final_project\models\whisker_corner_stp.prt
+! SUMMARY-   
+! SUMMARY-  Summary of Unigraphics Part Entities
+! SUMMARY-   
+! SUMMARY-  Entities Processed             Count
+! SUMMARY-  ------------------             -----
+! SUMMARY-  Solid .......................:     1
+! SUMMARY-                                 -----
+! SUMMARY-  Total                              1
+! INFO-      
+! INFO-     Total number of solids input for this translation       :         1
+! INFO-      
+! INFO-     Number of solids created without body validation faults :         1
+! INFO-      
+! INFO-     Number of solids created with body validation fault(s)  :         0
+! INFO-      
+! INFO-     Number of solids ending up as sheet bodies              :         0
+! INFO-      
+! INFO-     End of Translation: 24-NOV-2025  3:57:04 PM
+! INFO-      

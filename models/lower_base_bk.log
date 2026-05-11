@@ -1,0 +1,52 @@
+﻿
+Unigraphics NX V1926 / 2D Exchange
+
+Reading part: C:\Users\buguniao\AppData\Local\Temp\buguACF03D4Ft3u2.prt
+
+
+Writing part: C:\Users\buguniao\AppData\Local\Temp\buguACF03D4Ft3u1.prt
+
+Elapsed time   :    0 minutes,  1 seconds
+Actual CPU Time:    0 minutes,  0 seconds
+
+INFO-
+INFO-		Unigraphics Version NX V1926 to AutoCAD 2004
+INFO-		
+INFO-
+INFO-		Running UGTODXF Translator .....
+INFO-
+INFO-		Start of Translation: Mon Nov 17 03:18:29 2025
+INFO-
+STATUS-		Converting C:\Users\buguniao\AppData\Local\Temp\buguACF03D4Ft3u1.prt
+STATUS-
+SUMMARY-
+SUMMARY-	Summary of Unigraphics Input Entities
+SUMMARY-	For Unigraphics File: C:\Users\buguniao\AppData\Local\Temp\buguACF03D4Ft3u1.prt
+SUMMARY-	------------------------------------------------------------------
+SUMMARY-	Entity Type					Count
+SUMMARY-	------------------------------------------------------------------
+SUMMARY-	Line .....................................:	44
+SUMMARY-	Arc ......................................:	4
+SUMMARY-	Circle ...................................:	34
+SUMMARY-	------------------------------------------------------------------
+SUMMARY-	Total ....................................:	82
+SUMMARY-	------------------------------------------------------------------
+SUMMARY-
+STATUS-
+INFO-
+INFO-		Writing File: C:\Users\buguniao\OneDrive\UPenn\classes\Mechatronic\Lab\Lab4\models\my_build\lower_base.dxf
+SUMMARY-	Summary of AutoCAD Output Entities
+SUMMARY-	------------------------------------------------------------------
+SUMMARY-	Entity Type					Count
+SUMMARY-	------------------------------------------------------------------
+SUMMARY-	Arc ......................................:	4
+SUMMARY-	Circle ...................................:	34
+SUMMARY-	Line .....................................:	44
+SUMMARY-	Layout ...................................:	6
+SUMMARY-	------------------------------------------------------------------
+SUMMARY-	Total ....................................:	88
+SUMMARY-	------------------------------------------------------------------
+SUMMARY-
+INFO-
+INFO-		End of Translation: Mon Nov 17 03:18:59 2025
+INFO-		Translation CPU time: 0 m, 30 sINFO-
