@@ -1,0 +1,226 @@
+const char body[] PROGMEM = R"===(
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Car Buttons</title>
+<style>
+  body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; margin: 24px; }
+  .row { display:flex; gap:24px; align-items:flex-start; flex-wrap: wrap; }
+  #controls {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-auto-rows: 60px;
+    gap: 12px;
+  }
+  .btn {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background:#f5f5f5;
+    cursor:pointer;
+    user-select:none;
+    font-weight:500;
+    box-shadow: 0 2px 4px rgba(0,0,0,.08);
+    touch-action: manipulation;
+  }
+  .btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 3px rgba(0,0,0,.15);
+    background:#e9e9e9;
+  }
+  #modeToggle {
+    margin-bottom: 16px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1px solid #888;
+    background:#fff;
+    cursor:pointer;
+    font-weight:600;
+  }
+  #readout { min-width: 260px; }
+  #outputlabel { font-weight: 600; margin-top: 8px; display:block; }
+  code { background:#f6f6f6; padding:2px 6px; border-radius:4px; }
+
+  /* 新增：自动寻路 & 舵机按钮区域 */
+  .actionBar {
+    margin-top: 16px;
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+  .actionBar button {
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1px solid #888;
+    background:#fff;
+    cursor:pointer;
+    font-weight:600;
+  }
+  .actionBar button:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 3px rgba(0,0,0,.15);
+    background:#f0f0f0;
+  }
+</style>
+</head>
+<body>
+
+<h2>Car Control</h2>
+<div class="row">
+  <div>
+    <!-- 这里的 mode 我们用来区分：0=手动控制, 1=自动寻路 -->
+    <button id="modeToggle" type="button"></button>
+
+    <div id="controls">
+      <!-- Row 1 -->
+      <div></div>
+      <div class="btn" data-dx="0"   data-dy="100" data-w="0">Forward</div>
+      <div></div>
+
+      <!-- Row 2 -->
+      <div class="btn" data-dx="-100" data-dy="100" data-w="0">Front Left</div>
+      <div class="btn" data-dx="0"    data-dy="0"   data-w="0">Stop</div>
+      <div class="btn" data-dx="100"  data-dy="100" data-w="0">Front Right</div>
+
+      <!-- Row 3 -->
+      <div class="btn" data-dx="-100" data-dy="0"   data-w="0">Left</div>
+      <div></div>
+      <div class="btn" data-dx="100"  data-dy="0"   data-w="0">Right</div>
+
+      <!-- Row 4 -->
+      <div class="btn" data-dx="-100" data-dy="-100" data-w="0">Back Left</div>
+      <div class="btn" data-dx="0"    data-dy="-100" data-w="0">Backward</div>
+      <div class="btn" data-dx="100"  data-dy="-100" data-w="0">Back Right</div>
+
+      <!-- Row 5 -->
+      <div class="btn" data-dx="0" data-dy="0" data-w="100">Spin Left</div>
+      <div></div>
+      <div class="btn" data-dx="0" data-dy="0" data-w="-100">Spin Right</div>
+    </div>
+
+    <!-- 新增：一键启动寻路 & 舵机按钮 -->
+    <div class="actionBar">
+      <button id="autoPathBtn" type="button">Start Auto Path</button>
+      <button id="servoBtn" type="button">Servo: OFF</button>
+    </div>
+  </div>
+
+  <div id="readout">
+    <div>Sending: <code>joy?data=&lt;mode&gt;,&lt;dx&gt;,&lt;dy&gt;,&lt;w&gt;</code></div>
+    <p>Mode: <span id="modeText"></span></p>
+    <p>Last command: <span id="cmdText">data=0,0,0,0</span></p>
+    <span id="outputlabel"></span>
+  </div>
+</div>
+
+<script>
+(() => {
+  // 这里我们约定：mode = 0 手动、1 自动寻路
+  let mode = 0; 
+
+  const modeToggle   = document.getElementById('modeToggle');
+  const modeText     = document.getElementById('modeText');
+  const cmdText      = document.getElementById('cmdText');
+  const autoPathBtn  = document.getElementById('autoPathBtn');
+  const servoBtn     = document.getElementById('servoBtn');
+
+  let servoOn = false;   // 舵机当前状态（前端记录）
+
+  function updateModeUI() {
+    if (mode === 0) {
+      modeToggle.textContent = 'Switch to AUTO path (mode=1)';
+      modeText.textContent   = 'Manual control (mode=0)';
+    } else {
+      modeToggle.textContent = 'Switch to MANUAL control (mode=0)';
+      modeText.textContent   = 'Auto path (mode=1)';
+    }
+  }
+
+  modeToggle.addEventListener('click', () => {
+    mode = (mode === 0) ? 1 : 0;
+    updateModeUI();
+    // 切模式时发一条 0,0,0，告诉板子更新模式
+    sendData(0, 0, 0);
+  });
+
+  // 封装发送函数：mode 在第一个字段
+  function sendData(dx, dy, w) {
+    const dataStr = mode + ',' + dx + ',' + dy + ',' + w;
+    cmdText.textContent = 'data=' + dataStr;
+
+    const xhttp = new XMLHttpRequest();
+    const url = 'joy?data=' + encodeURIComponent(dataStr);
+    xhttp.open('GET', url, true);
+    xhttp.send();
+  }
+
+  // 一键启动寻路按钮：把 mode 切成 1，然后发一条 1,0,0,0
+  autoPathBtn.addEventListener('click', () => {
+    mode = 1;
+    updateModeUI();
+    // 这里 dx,dy,w 都为 0，只是告诉主控“进入自动寻路模式”
+    sendData(0, 0, 0);
+  });
+
+  // 舵机按钮：切换状态，并调用一个单独的 URL，比如 /servo?on=0/1
+  servoBtn.addEventListener('click', () => {
+    servoOn = !servoOn;
+    servoBtn.textContent = servoOn ? 'Servo: ON' : 'Servo: OFF';
+
+    const xhttp = new XMLHttpRequest();
+    const url = 'servo?on=' + (servoOn ? '1' : '0');
+    xhttp.open('GET', url, true);
+    xhttp.send();
+  });
+
+  function attachButtonEvents(btn) {
+    const dx = parseInt(btn.getAttribute('data-dx'), 10);
+    const dy = parseInt(btn.getAttribute('data-dy'), 10);
+    const w  = parseInt(btn.getAttribute('data-w'), 10);
+
+    btn.addEventListener('pointerdown', (e) => {
+      e.preventDefault();
+      sendData(dx, dy, w);
+    }, { passive: false });
+
+    btn.addEventListener('pointerup', (e) => {
+      e.preventDefault();
+      sendData(0, 0, 0);
+    }, { passive: false });
+
+    btn.addEventListener('pointercancel', (e) => {
+      e.preventDefault();
+      sendData(0, 0, 0);
+    }, { passive: false });
+  }
+
+  // 只给方向控制的 .btn 绑定事件，新加的 auto/servo 按钮不带 .btn 类
+  document.querySelectorAll('.btn').forEach(attachButtonEvents);
+
+  updateModeUI();
+})();
+
+// 保持你原来的速度显示逻辑
+setInterval(updateLabel, 50);
+updateLabel();
+function updateLabel() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var label = document.getElementById("outputlabel");
+      if (label) {
+        label.innerHTML = this.responseText;
+      }
+    }
+  };
+  xhttp.open("GET", "measuredSpeed", true);
+  xhttp.send();
+}
+</script>
+</body>
+</html>
+)===";
